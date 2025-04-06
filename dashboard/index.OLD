@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+</head>
+<body class="min-h-screen bg-gray-900 text-gray-100">
+    <div class="max-w-7xl mx-auto p-8">
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold mb-4">System Dashboard</h1>
+            <div id="statusMessage" class="text-gray-400"></div>
+        </header>
+
+        <!-- Dashboard Grid -->
+        <div id="dashboard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Sections will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const dashboard = document.getElementById('dashboard');
+        const statusMessage = document.getElementById('statusMessage');
+
+        // Config Processing
+        function parseConfig(configText) {
+            const lines = configText.split('\n');
+            let currentSection = '';
+            const parsedData = {};
+
+            lines.forEach(line => {
+                line = line.trim();
+                if (line) {
+                    if (line.startsWith('[') && line.endsWith(']')) {
+                        currentSection = line.slice(1, -1);
+                        parsedData[currentSection] = {};
+                    } else {
+                        const [key, value] = line.split('=').map(part => part.trim());
+                        if (key && value && currentSection) {
+                            parsedData[currentSection][key] = value;
+                        }
+                    }
+                }
+            });
+
+            return parsedData;
+        }
+
+        // UI Components
+        function generateLink(ip) {
+            return `http://${ip}`;
+        }
+
+        function createCard(device, ip) {
+            return `
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:bg-gray-700 transition-colors duration-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-medium mb-2">${device}</h3>
+                            <p class="text-gray-400">${ip}</p>
+                        </div>
+                        <a href="${generateLink(ip)}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="text-blue-400 hover:text-blue-300 transition-colors p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                 width="20" 
+                                 height="20" 
+                                 viewBox="0 0 24 24" 
+                                 fill="none" 
+                                 stroke="currentColor" 
+                                 stroke-width="2" 
+                                 stroke-linecap="round" 
+                                 stroke-linejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createSection(sectionName, devices) {
+            const section = document.createElement('div');
+            section.className = 'col-span-1';
+            
+            const content = `
+                <h2 class="text-xl font-semibold mb-4 text-blue-400">${sectionName}</h2>
+                <div class="grid gap-4">
+                    ${Object.entries(devices)
+                        .map(([device, ip]) => createCard(device, ip))
+                        .join('')}
+                </div>
+            `;
+            
+            section.innerHTML = content;
+            return section;
+        }
+
+        function renderDashboard(configData) {
+            dashboard.innerHTML = ''; // Clear existing content
+            Object.entries(configData).forEach(([section, devices]) => {
+                dashboard.appendChild(createSection(section, devices));
+            });
+        }
+
+        function updateStatus(message, isError = false) {
+            statusMessage.textContent = message;
+            statusMessage.className = isError ? 'text-red-400' : 'text-gray-400';
+        }
+
+        // Load and process the config file
+        async function loadConfig() {
+            try {
+                updateStatus('Loading configuration...');
+                const response = await fetch('DBconfigs.ini');
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load config file (${response.status})`);
+                }
+
+                const configText = await response.text();
+                const configData = parseConfig(configText);
+
+                if (Object.keys(configData).length === 0) {
+                    throw new Error('No valid sections found in config');
+                }
+
+                renderDashboard(configData);
+                updateStatus('Dashboard loaded successfully');
+
+            } catch (error) {
+                updateStatus(`Error: ${error.message}`, true);
+                console.error('Config loading error:', error);
+            }
+        }
+
+        // Load config when page loads
+        document.addEventListener('DOMContentLoaded', loadConfig);
+
+        // Auto-refresh every 5 minutes
+        setInterval(loadConfig, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

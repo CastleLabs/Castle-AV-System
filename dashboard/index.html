@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Castle IOT Dashboard</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --primary: #3B82F6;
+            --primary-dark: #2563EB;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+        }
+
+        /* Use Inter for a modern, professional look */
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            position: relative;
+        }
+        .status-indicator::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        .status-online {
+            background-color: var(--success);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            animation: pulse 2s infinite;
+        }
+        .status-offline {
+            background-color: var(--error);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+        .status-checking {
+            background-color: var(--warning);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Slight shadow on the header for more depth */
+        .header {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-dropdown-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            min-width: 220px;
+            padding: 0.5rem 0;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .nav-dropdown:hover .nav-dropdown-content {
+            display: block;
+            opacity: 1;
+        }
+        .nav-item {
+            padding: 0.75rem 1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .nav-item:hover {
+            background: rgba(59, 130, 246, 0.05);
+            color: var(--primary);
+        }
+
+        .section-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        /* Dark mode styles */
+        .dark {
+            background-color: #0F172A !important;
+            color: #E5E7EB !important;
+        }
+        .dark .header {
+            background: rgba(15, 23, 42, 0.8) !important;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5) !important;
+            box-shadow: var(--shadow-sm);
+        }
+        .dark .dashboard-card {
+            background: #1E293B !important;
+            border-color: rgba(55, 65, 81, 0.5) !important;
+        }
+        .dark .section-container {
+            background: #1E293B !important;
+            border: 1px solid rgba(55, 65, 81, 0.5) !important;
+        }
+        .dark .section-header {
+            border-bottom-color: rgba(55, 65, 81, 0.5) !important;
+            color: #E5E7EB !important;
+        }
+        .dark .nav-dropdown-content {
+            background: #1E293B !important;
+            border-color: rgba(55, 65, 81, 0.5) !important;
+            color: #E5E7EB !important; 
+        }
+        .dark .nav-item:hover {
+            background: rgba(59, 130, 246, 0.1) !important;
+            color: var(--primary);
+        }
+        .dark .text-gray-600 {
+            color: #9CA3AF !important;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 640px) {
+            .nav-dropdown-content {
+                position: static;
+                width: 100%;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300">
+    <!-- Header -->
+    <header class="header sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <h1 class="ml-3 text-xl font-semibold">Castle IOT Dashboard</h1>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <!-- The "Navigate" dropdown -->
+                    <div class="nav-dropdown relative hidden sm:block">
+                        <button class="btn-primary">
+                            Navigate
+                            <svg class="inline-block ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="nav-dropdown-content absolute mt-2 right-0" id="navMenu">
+                            <!-- Menu items inserted by JS -->
+                        </div>
+                    </div>
+
+                    <!-- New Add/Edit button linking to edit.php -->
+                    <a href="edit.php" class="btn-primary">
+                        Add/Edit
+                    </a>
+
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M20.354 15.354A9 9 0 018.646 3.646 
+                                     9.003 9.003 0 0012 21
+                                     a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Status Banner -->
+        <div id="statusBanner" class="mb-6 rounded-lg bg-blue-50 dark:bg-blue-900/20 p-4 hidden">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" 
+                              d="M18 10a8 8 0 11-16 0 
+                                 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 
+                                 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 
+                                 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" 
+                              clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p id="statusMessage" class="text-sm text-blue-700 dark:text-blue-200"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div id="dashboard" class="space-y-6">
+            <!-- Sections will be inserted here by JS -->
+        </div>
+    </main>
+
+    <script>
+        // Core functionality
+        const dashboard = document.getElementById('dashboard');
+        const statusMessage = document.getElementById('statusMessage');
+        const statusBanner = document.getElementById('statusBanner');
+        const themeToggle = document.getElementById('themeToggle');
+
+        // Theme handling
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark');
+            themeToggle.innerHTML = isDark 
+                ? '<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>'
+                : '<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>';
+        }
+
+        // Status display
+        function showStatus(message, type = 'info') {
+            statusMessage.textContent = message;
+            statusBanner.classList.remove('hidden');
+            
+            const baseClasses = 'mb-6 rounded-lg p-4';
+            const typeClasses = {
+                error: 'bg-red-50 dark:bg-red-900/20',
+                success: 'bg-green-50 dark:bg-green-900/20',
+                info: 'bg-blue-50 dark:bg-blue-900/20'
+            };
+            
+            statusBanner.className = `${baseClasses} ${typeClasses[type] || typeClasses.info}`;
+
+            if (type === 'success') {
+                setTimeout(() => statusBanner.classList.add('hidden'), 3000);
+            }
+        }
+
+        // Device status checking
+        async function checkDeviceStatus(ip) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                // Attempt fetching
+                await fetch(`http://${ip}`, {
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        // Card creation
+        function createDeviceCard(device, ip, section) {
+            const card = document.createElement('div');
+            card.className = 'dashboard-card overflow-hidden';
+            card.setAttribute('data-section', section);
+            
+            card.innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center space-x-3">
+                            <h3 class="text-lg font-semibold">${device}</h3>
+                            <div class="status-indicator status-checking"></div>
+                        </div>
+                        <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                            ${section}
+                        </span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">${ip}</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <a href="http://${ip}" target="_blank" rel="noopener"
+                           class="btn-primary inline-flex items-center">
+                            <span>OPEN</span>
+                            <svg class="ml-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 
+                                         101.414 1.414L15 6.414V9a1 1 0 
+                                         102 0V4a1 1 0 
+                                         00-1-1h-5z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Initialize status checking
+            const statusIndicator = card.querySelector('.status-indicator');
+            checkDeviceStatus(ip).then(isOnline => {
+                statusIndicator.className = `status-indicator ${isOnline ? 'status-online' : 'status-offline'}`;
+            });
+            
+            return card;
+        }
+
+        // Create section container
+        function createSectionContainer(section, devices) {
+            const sectionContainer = document.createElement('div');
+            sectionContainer.className = 'section-container';
+            sectionContainer.setAttribute('data-section', section);
+
+            // Add section header
+            const header = document.createElement('h2');
+            header.className = 'section-header';
+            header.textContent = section;
+            sectionContainer.appendChild(header);
+
+            // Add devices grid
+            const grid = document.createElement('div');
+            grid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+            
+            Object.entries(devices).forEach(([device, ip]) => {
+                grid.appendChild(createDeviceCard(device, ip, section));
+            });
+            
+            sectionContainer.appendChild(grid);
+            return sectionContainer;
+        }
+
+        // Navigation handling
+        function populateNavigation(sections) {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.innerHTML = '';
+            
+            Object.keys(sections).forEach(section => {
+                const sectionItem = document.createElement('div');
+                sectionItem.className = 'nav-item';
+                sectionItem.textContent = section;
+                
+                sectionItem.addEventListener('click', () => {
+                    const sectionEl = document.querySelector(`[data-section="${section}"]`);
+                    if (sectionEl) {
+                        sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Add highlight effect
+                        sectionEl.style.transform = 'scale(1.01)';
+                        setTimeout(() => {
+                            sectionEl.style.transform = '';
+                        }, 1000);
+                    }
+                });
+                
+                navMenu.appendChild(sectionItem);
+            });
+        }
+
+        // Config loading and parsing
+        async function loadConfig() {
+            try {
+                showStatus('Loading configuration...', 'info');
+                const response = await fetch('DBconfigs.ini');
+                if (!response.ok) throw new Error('Failed to load configuration');
+                
+                const config = await response.text();
+                const sections = {};
+                let currentSection = '';
+                
+                config.split('\n').forEach(line => {
+                    line = line.trim();
+                    if (line.startsWith('[') && line.endsWith(']')) {
+                        currentSection = line.slice(1, -1);
+                        sections[currentSection] = {};
+                    } else if (line && currentSection) {
+                        const [device, ip] = line.split('=').map(s => s.trim());
+                        if (device && ip) {
+                            sections[currentSection][device] = ip;
+                        }
+                    }
+                });
+
+                // Render dashboard
+                dashboard.innerHTML = '';
+                Object.entries(sections).forEach(([section, devices]) => {
+                    dashboard.appendChild(createSectionContainer(section, devices));
+                });
+
+                // Update navigation
+                populateNavigation(sections);
+                showStatus('Dashboard updated successfully', 'success');
+                
+            } catch (error) {
+                console.error('Configuration error:', error);
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Initialize dashboard
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark');
+        }
+        updateThemeIcon();
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Start the dashboard
+        loadConfig();
+        setInterval(loadConfig, 300000); // Refresh every 5 minutes
+    </script>
+</body>
+</html>

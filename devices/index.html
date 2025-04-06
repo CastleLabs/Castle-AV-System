@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Device Management</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="home-button-container">
+      <a href="http://192.168.8.127" class="home-button">Home</a>
+      <button id="reboot-all" class="reboot-button">Reboot All Devices</button>
+    </div>
+
+    <div class="grid">
+
+      <!-- RECEIVERS -->
+      <div>
+        <h2>RECEIVERS</h2>
+
+        <!-- Attic -->
+        <h3>Attic</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Attic RXr 1</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.9" target="_blank">192.168.8.9</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.9/pull.bmp" alt="Attic RXr 1 Status" class="status-image" data-ip="192.168.8.9">
+                <button class="refresh-button" data-ip="192.168.8.9">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Attic RX 2</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.12" target="_blank">192.168.8.12</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.12/pull.bmp" alt="Attic RX 2 Status" class="status-image" data-ip="192.168.8.12">
+                <button class="refresh-button" data-ip="192.168.8.12">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Attic RX 4</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.20" target="_blank">192.168.8.20</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.20/pull.bmp" alt="Attic RX 4 Status" class="status-image" data-ip="192.168.8.20">
+                <button class="refresh-button" data-ip="192.168.8.20">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <!-- Corrected "Attc" to "Attic" for clarity if desired -->
+                <div class="device-name">Attic RX 5</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.21" target="_blank">192.168.8.21</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.21/pull.bmp" alt="Attic RX 5 Status" class="status-image" data-ip="192.168.8.21">
+                <button class="refresh-button" data-ip="192.168.8.21">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Bowling -->
+        <h3>Bowling</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Bowling Music RX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.25" target="_blank">192.168.8.25</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.25/pull.bmp" alt="Bowling Music RX Status" class="status-image" data-ip="192.168.8.25">
+                <button class="refresh-button" data-ip="192.168.8.25">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Bowling Bar Music RX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.28" target="_blank">192.168.8.28</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.28/pull.bmp" alt="Bowling Bar Music RX Status" class="status-image" data-ip="192.168.8.28">
+                <button class="refresh-button" data-ip="192.168.8.28">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Bowling Bar TV 1</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.60" target="_blank">192.168.8.60</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.60/pull.bmp" alt="Bowling Bar TV 1 Status" class="status-image" data-ip="192.168.8.60">
+                <button class="refresh-button" data-ip="192.168.8.60">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Bowling Bar TV 2</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.61" target="_blank">192.168.8.61</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.61/pull.bmp" alt="Bowling Bar TV 2 Status" class="status-image" data-ip="192.168.8.61">
+                <button class="refresh-button" data-ip="192.168.8.61">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Bowling Bar TV 3</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.62" target="_blank">192.168.8.62</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.62/pull.bmp" alt="Bowling Bar TV 3 Status" class="status-image" data-ip="192.168.8.62">
+                <button class="refresh-button" data-ip="192.168.8.62">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Dining -->
+        <h3>Dining</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Dining Area TV</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.70" target="_blank">192.168.8.70</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.70/pull.bmp" alt="Dining Area TV Status" class="status-image" data-ip="192.168.8.70">
+                <button class="refresh-button" data-ip="192.168.8.70">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Rink -->
+        <h3>Rink</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Rink Music RX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.15" target="_blank">192.168.8.15</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.15/pull.bmp" alt="Rink Music RX Status" class="status-image" data-ip="192.168.8.15">
+                <button class="refresh-button" data-ip="192.168.8.15">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Rink Video RX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.13" target="_blank">192.168.8.13</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.13/pull.bmp" alt="Rink Video RX Status" class="status-image" data-ip="192.168.8.13">
+                <button class="refresh-button" data-ip="192.168.8.13">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Rink Video</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.22" target="_blank">192.168.8.22</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.22/pull.bmp" alt="Rink Video Status" class="status-image" data-ip="192.168.8.22">
+                <button class="refresh-button" data-ip="192.168.8.22">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Axe Billiards -->
+        <h3>Axe Billiards</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Axe Billiards Music RX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.27" target="_blank">192.168.8.27</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.27/pull.bmp" alt="Axe Billiards Music RX Status" class="status-image" data-ip="192.168.8.27">
+                <button class="refresh-button" data-ip="192.168.8.27">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Wireless -->
+        <h3>Wireless</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Wireless Mic RX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.81" target="_blank">192.168.8.81</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.81/pull.bmp" alt="Wireless Mic RX Status" class="status-image" data-ip="192.168.8.81">
+                <button class="refresh-button" data-ip="192.168.8.81">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- NeoVerse -->
+        <h3>NeoVerse</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">NeoVerse 1</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.50" target="_blank">192.168.8.50</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.50/pull.bmp" alt="NeoVerse 1 Status" class="status-image" data-ip="192.168.8.50">
+                <button class="refresh-button" data-ip="192.168.8.50">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">NeoVerse 2</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.51" target="_blank">192.168.8.51</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.51/pull.bmp" alt="NeoVerse 2 Status" class="status-image" data-ip="192.168.8.51">
+                <button class="refresh-button" data-ip="192.168.8.51">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">NeoVerse 3</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.52" target="_blank">192.168.8.52</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.52/pull.bmp" alt="NeoVerse 3 Status" class="status-image" data-ip="192.168.8.52">
+                <button class="refresh-button" data-ip="192.168.8.52">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">NeoVerse 4</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.53" target="_blank">192.168.8.53</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.53/pull.bmp" alt="NeoVerse 4 Status" class="status-image" data-ip="192.168.8.53">
+                <button class="refresh-button" data-ip="192.168.8.53">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">NeoVerse 5</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.54" target="_blank">192.168.8.54</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.54/pull.bmp" alt="NeoVerse 5 Status" class="status-image" data-ip="192.168.8.54">
+                <button class="refresh-button" data-ip="192.168.8.54">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">NeoVerse 6</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.55" target="_blank">192.168.8.55</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.55/pull.bmp" alt="NeoVerse 6 Status" class="status-image" data-ip="192.168.8.55">
+                <button class="refresh-button" data-ip="192.168.8.55">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Spare Receivers -->
+        <h3>Spare Receivers</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Spare RX 1</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.42" target="_blank">192.168.8.42</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.42/pull.bmp" alt="Spare RX 1 Status" class="status-image" data-ip="192.168.8.42">
+                <button class="refresh-button" data-ip="192.168.8.42">↻</button>
+              </div>
+            </div>
+          </li>
+          <!-- Notice the original data has two “Spare RX 2” with different IPs -->
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Spare RX 2</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.44" target="_blank">192.168.8.44</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.44/pull.bmp" alt="Spare RX 2 Status" class="status-image" data-ip="192.168.8.44">
+                <button class="refresh-button" data-ip="192.168.8.44">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Spare RX 2</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.45" target="_blank">192.168.8.45</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.45/pull.bmp" alt="Spare RX 2 Status" class="status-image" data-ip="192.168.8.45">
+                <button class="refresh-button" data-ip="192.168.8.45">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Spare RX 3</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.46" target="_blank">192.168.8.46</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.46/pull.bmp" alt="Spare RX 3 Status" class="status-image" data-ip="192.168.8.46">
+                <button class="refresh-button" data-ip="192.168.8.46">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- TRANSMITTERS -->
+      <div>
+        <h2>TRANSMITTERS</h2>
+
+        <!-- Attic -->
+        <h3>Attic</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Attic TX 1</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.30" target="_blank">192.168.8.30</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.30/pull.bmp" alt="Attic TX 1 Status" class="status-image" data-ip="192.168.8.30">
+                <button class="refresh-button" data-ip="192.168.8.30">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Attic TX 2</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.18" target="_blank">192.168.8.18</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.18/pull.bmp" alt="Attic TX 2 Status" class="status-image" data-ip="192.168.8.18">
+                <button class="refresh-button" data-ip="192.168.8.18">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Attic TX 3</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.19" target="_blank">192.168.8.19</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.19/pull.bmp" alt="Attic TX 3 Status" class="status-image" data-ip="192.168.8.19">
+                <button class="refresh-button" data-ip="192.168.8.19">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Mobile -->
+        <h3>Mobile</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Mobile Video TX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.11" target="_blank">192.168.8.11</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.11/pull.bmp" alt="Mobile Video TX Status" class="status-image" data-ip="192.168.8.11">
+                <button class="refresh-button" data-ip="192.168.8.11">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Mobile Audio TX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.17" target="_blank">192.168.8.17</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.17/pull.bmp" alt="Mobile Audio TX Status" class="status-image" data-ip="192.168.8.17">
+                <button class="refresh-button" data-ip="192.168.8.17">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Office -->
+        <h3>Office</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Office Unifi TX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.26" target="_blank">192.168.8.26</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.26/pull.bmp" alt="Office Unifi TX Status" class="status-image" data-ip="192.168.8.26">
+                <button class="refresh-button" data-ip="192.168.8.26">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Apple TV -->
+        <h3>Apple TV</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Apple TV TX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.10" target="_blank">192.168.8.10</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.10/pull.bmp" alt="Apple TV TX Status" class="status-image" data-ip="192.168.8.10">
+                <button class="refresh-button" data-ip="192.168.8.30">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Wireless -->
+        <h3>Wireless</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Wireless Mic TX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.80" target="_blank">192.168.8.80</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.80/pull.bmp" alt="Wireless Mic TX Status" class="status-image" data-ip="192.168.8.80">
+                <button class="refresh-button" data-ip="192.168.8.80">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- RockBot -->
+        <h3>RockBot</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">RockBot TX</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.16" target="_blank">192.168.8.16</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.16/pull.bmp" alt="RockBot TX Status" class="status-image" data-ip="192.168.8.16">
+                <button class="refresh-button" data-ip="192.168.8.16">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Power AV -->
+        <h3>Power AV</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Power AV System</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.100" target="_blank">192.168.8.100</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.100/pull.bmp" alt="Power AV System Status" class="status-image" data-ip="192.168.8.100">
+                <button class="refresh-button" data-ip="192.168.8.100">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Spare Transmitters -->
+        <h3>Spare Transmitters</h3>
+        <ul>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Spare TX 2</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.41" target="_blank">192.168.8.41</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.41/pull.bmp" alt="Spare TX 2 Status" class="status-image" data-ip="192.168.8.41">
+                <button class="refresh-button" data-ip="192.168.8.41">↻</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="device-card">
+              <div class="device-info">
+                <div class="device-name">Spare TX 3</div>
+                <div class="ip-address">IP Address: <a href="http://192.168.8.43" target="_blank">192.168.8.43</a></div>
+              </div>
+              <div class="device-image">
+                <img src="http://192.168.8.43/pull.bmp" alt="Spare TX 3 Status" class="status-image" data-ip="192.168.8.43">
+                <button class="refresh-button" data-ip="192.168.8.43">↻</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Reboot Modal -->
+  <div id="rebootModal" class="modal">
+    <div class="modal-content">
+      <h2>Warning</h2>
+      <p>Make sure rink and bowling volume is muted before proceeding.</p>
+      <div class="modal-buttons">
+        <button id="cancelReboot">Cancel</button>
+        <button id="confirmReboot">Proceed with Reboot</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

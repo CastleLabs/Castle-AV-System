@@ -1,0 +1,20 @@
+[Temp Sensors]
+Kitchen Upright 2 = 192.168.0.253:5000/settings
+Keg Room = 192.168.1.86:5000/settings
+Pizza Walk In = 192.168.1.8:5000/settings
+
+[IOT]
+Wrist Band Announcer = 192.168.6.145:5000
+Lasertag = 192.168.1.183:5000
+Bar Blinker = 192.168.0.74:5000
+Bar Blinker WLED = 192.168.6.223
+
+[WLED]
+Bar Blinker WLED = 192.168.6.223
+Small Bar Bottles = 192.168.6.13
+
+
+[other]
+AV Controls = 192.168.8.127
+
+
